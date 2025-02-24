@@ -5,7 +5,7 @@
 void ChatSession::start()
 {
 	// Join room when session starts
-	room_.join(shared_from_this());
+	room_.join(current_room_, shared_from_this());
 	do_read();
 }
 
@@ -24,13 +24,17 @@ void ChatSession::do_read()
 								{
 									std::string msg(data_.data(), length);
 
-									// Broadcast the message
-									room_.deliver(msg);
+									if (msg.rfind("/", 0) == 0) {  // Check if message starts with "/"
+										handle_command(msg);
+									} else {
+										room_.deliver(current_room_, msg);
+									}
+
 									do_read();
 								}
 								else
 								{
-									room_.leave(shared_from_this());
+									room_.leave(current_room_, shared_from_this());
 								}
 							});
 }
@@ -43,7 +47,19 @@ void ChatSession::do_write(const std::string &message)
 							 {
 								 if (ec)
 								 {
-									 room_.leave(shared_from_this());
+									 room_.leave(current_room_, shared_from_this());
 								 }
 							 });
+}
+
+void ChatSession::handle_command(const std::string &command)
+{
+	if (command.rfind("/join", 0) == 0) //Trying to join room
+	{
+		std::string roomName = command.substr(6);
+		room_.leave(current_room_, shared_from_this());//Leave current room
+		current_room_ = roomName;
+		room_.join(current_room_, shared_from_this());//Join new room
+		deliver("Switched to room: " + current_room_ + "\n");
+	}
 }
