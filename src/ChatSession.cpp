@@ -27,7 +27,7 @@ void ChatSession::do_read()
 									if (msg.rfind("/", 0) == 0) {  // Check if message starts with "/"
 										handle_command(msg);
 									} else {
-										room_.deliver(current_room_, msg);
+										room_.deliver(current_room_, msg, shared_from_this());
 									}
 
 									do_read();

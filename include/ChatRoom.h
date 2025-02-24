@@ -13,7 +13,7 @@ class ChatRoom
 public:
     void join(const std::string& roomName, std::shared_ptr<ChatSession> session);
     void leave(const std::string& roomName, std::shared_ptr<ChatSession> session);
-    void deliver(const std::string& roomName, const std::string& message);
+    void deliver(const std::string& roomName, const std::string& message, std::shared_ptr<ChatSession> sender);
 
 private:
     std::map<std::string, std::set<std::shared_ptr<ChatSession>>> rooms_;

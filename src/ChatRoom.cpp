@@ -22,12 +22,13 @@ void ChatRoom::leave(const std::string& roomName, std::shared_ptr<ChatSession> s
     }
 }
 
-void ChatRoom::deliver(const std::string& roomName, const std::string& message)
+void ChatRoom::deliver(const std::string& roomName, const std::string& message, std::shared_ptr<ChatSession> sender)
 {
     if (rooms_.find(roomName) != rooms_.end())
     {
         for (auto session : rooms_[roomName])
         {
+            if (session != sender) //Don't display message to sender in terminal
             session->deliver(message);
         }
     }
