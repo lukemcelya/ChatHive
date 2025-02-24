@@ -60,3 +60,11 @@ After logging in, you can **switch rooms** and **send messages:**
 /join <channel>
 'Hello everyone!'
 ```
+## Roadmap
+* **TLS Encryption** - Secure chat messages with OpenSSL.
+* **GUI Client (Qt)** - A user-friendly graphical interface.
+* **File Sharing** - Send images and documents.
+* **Performance Improvements** - Multi-threading for high concurrency.
+
+## Contributing
+Want to contribute? Feel free to fork, submit PRs, or report issues!
