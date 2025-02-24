@@ -12,7 +12,7 @@ for user authentication. Users can register, log in, join rooms, and chat in rea
 * **Expandable** - Future updates will include encryption, file sharing, and a GUI client.
 
 ## Installation & Setup
-### 1. Install dependencies
+### <ins>1. Install dependencies</ins>
 **macOS (Homebrew)**
 ```sh
 brew install boost sqlite sqlitecpp
