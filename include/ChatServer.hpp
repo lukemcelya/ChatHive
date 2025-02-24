@@ -3,6 +3,7 @@
 
 #include <boost/asio.hpp>
 #include "ChatRoom.hpp"
+#include "Database.hpp"
 
 class ChatServer
 {
@@ -14,6 +15,7 @@ private:
 
     boost::asio::ip::tcp::acceptor acceptor_;
     ChatRoom room_;
+    Database& db;
 };
 
 #endif
