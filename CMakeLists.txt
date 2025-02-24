@@ -10,6 +10,7 @@ set(BOOST_ROOT "C:/Users/Luke/boost_1_87_0/boost_1_87_0")
 cmake_policy(SET CMP0167 NEW)
 find_package(Boost 1.87 REQUIRED COMPONENTS system)
 find_package(SQLite3 REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -24,7 +25,7 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(ChatHive ${SOURCES})
 
 #Link libraries
-target_link_libraries(ChatHive ${Boost_LIBRARIES} SQLite::SQLite3)
+target_link_libraries(ChatHive ${Boost_LIBRARIES} SQLite::SQLite3 OpenSSL::SSL OpenSSL::Crypto)
 
 # Include header files
 include_directories(include)
