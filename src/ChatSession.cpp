@@ -62,4 +62,12 @@ void ChatSession::handle_command(const std::string &command)
 		room_.join(current_room_, shared_from_this());//Join new room
 		deliver("Switched to room: " + current_room_ + "\n");
 	}
+	else if (command.rfind("/leave" , 0) == 0)
+	{
+	    std::string roomName = "default";
+		room_.leave(current_room_, shared_from_this());
+		current_room_ = roomName;
+		room_.join(current_room_, shared_from_this());
+		deliver("Switched to room: " + current_room_ + "\n");
+	}
 }
