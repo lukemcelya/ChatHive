@@ -2,8 +2,8 @@
 #include "ChatSession.hpp"
 #include <memory>
 
-ChatServer::ChatServer(boost::asio::io_context& io_context, const boost::asio::ip::tcp::endpoint& endpoint)
-    : acceptor_(io_context, endpoint)
+ChatServer::ChatServer(boost::asio::io_context& io_context, const boost::asio::ip::tcp::endpoint& endpoint, Database& db)
+    : acceptor_(io_context, endpoint), db(db)
 {
     do_accept();
 }
@@ -14,7 +14,7 @@ void ChatServer::do_accept()
     {
         if (!ec)
         {
-            std::make_shared<ChatSession>(std::move(socket), room_)->start();
+            std::make_shared<ChatSession>(std::move(socket), room_, db)->start();
         }
 
         do_accept();

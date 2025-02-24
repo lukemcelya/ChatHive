@@ -1794,4 +1794,6 @@ CMakeFiles/ChatHive.dir/src/Main.cpp.o: \
   /Users/lukemcelya/dev/ChatHive/include/ChatRoom.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/set \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__tree \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/map
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/map \
+  /Users/lukemcelya/dev/ChatHive/include/Database.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include/sqlite3.h

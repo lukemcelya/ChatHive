@@ -8,7 +8,7 @@
 class ChatServer
 {
 public:
-    ChatServer(boost::asio::io_context& io_context, const boost::asio::ip::tcp::endpoint& endpoint);
+    ChatServer(boost::asio::io_context& io_context, const boost::asio::ip::tcp::endpoint& endpoint, Database& db);
 
 private:
     void do_accept();
