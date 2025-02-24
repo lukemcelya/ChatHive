@@ -3,12 +3,21 @@
 #include "Database.hpp"
 #include <iostream>
 
+ChatSession::ChatSession(boost::asio::ssl::stream<boost::asio::ip::tcp::socket> socket, ChatRoom& room, Database& db)
+    : ssl_socket_(std::move(socket)),
+      room_(room),
+      db(db),
+      authenticated(false) {}
 
-void ChatSession::start()
-{
-	// Join room when session starts
-	room_.join(current_room_, shared_from_this());
-	do_read();
+void ChatSession::start() {
+    auto self(shared_from_this());
+    ssl_socket_.async_handshake(boost::asio::ssl::stream_base::server,
+        [this, self](const boost::system::error_code& error) {
+            if (!error) {
+                room_.join("default", shared_from_this());
+                do_read();
+            }
+        });
 }
 
 void ChatSession::deliver(const std::string &message)
@@ -19,7 +28,7 @@ void ChatSession::deliver(const std::string &message)
 void ChatSession::do_read()
 {
 	auto self(shared_from_this());
-	socket_.async_read_some(boost::asio::buffer(data_),
+	ssl_socket_.async_read_some(boost::asio::buffer(data_),
 							[this, self](boost::system::error_code ec, std::size_t length)
 							{
 								if (!ec)
@@ -44,7 +53,7 @@ void ChatSession::do_read()
 void ChatSession::do_write(const std::string &message)
 {
 	auto self(shared_from_this());
-	boost::asio::async_write(socket_, boost::asio::buffer(message),
+	boost::asio::async_write(ssl_socket_, boost::asio::buffer(message),
 							 [this, self](boost::system::error_code ec, std::size_t /*length*/)
 							 {
 								 if (ec)
