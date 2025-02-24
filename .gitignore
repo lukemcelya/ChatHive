@@ -33,6 +33,7 @@
 
 #Build
 build/
+data/
 
 #VSCode
 .vscode/
