@@ -45,7 +45,7 @@ void ChatSession::do_write(const std::string &message)
 {
 	auto self(shared_from_this());
 	boost::asio::async_write(socket_, boost::asio::buffer(message),
-							 [this, self](boost::system::error_code ec, std::size_t length)
+							 [this, self](boost::system::error_code ec, std::size_t /*length*/)
 							 {
 								 if (ec)
 								 {
@@ -56,11 +56,18 @@ void ChatSession::do_write(const std::string &message)
 
 void ChatSession::handle_command(const std::string &command)
 {
-	if (command.rfind("/register", 0) == 0)
+	std::istringstream iss(command);
+	std::string cmd, username, password;
+
+	iss >> cmd >> username >> password;
+
+	if (cmd == "/register")
 	{
-	    std::istringstream iss(command);
-		std::string cmd, username, password;
-		iss >> cmd >> username >> password;
+	    if (username.empty() || password.empty())
+	    {
+	        deliver("Usage: /register <username> <password>\n");
+			return;
+	    }
 
 		if (db.register_user(username, password))
 		{
@@ -71,11 +78,12 @@ void ChatSession::handle_command(const std::string &command)
 		    deliver("Username already exists. Please try again.\n");
 		}
 	}
-	else if (command.rfind("/login", 0) == 0)
+	else if (cmd == "/login")
 	{
-	    std::istringstream iss(command);
-		std::string cmd, username, password;
-		iss >> cmd >> username >> password;
+	    if (username.empty() || password.empty())
+	    {
+	        deliver("Usage: /login <username> <password>\n");
+	    }
 
 		if (db.login_user(username, password))
 		{

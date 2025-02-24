@@ -11,10 +11,10 @@ int main()
     try
     {
         //Database path
-        std::string dbPath = "data/chat_users.db";
-        if (!std::filesystem::exists("data"))
+        std::string dbPath = "../data/chat_users.db";
+        if (!std::filesystem::exists("../data"))
         {
-            std::filesystem::create_directory("data"); //Create data directory
+            std::filesystem::create_directory("../data"); //Create data directory
             std::cout << "Created directory for user database.\n";
         }
 

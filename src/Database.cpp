@@ -41,10 +41,32 @@ bool Database::execute_query(const std::string& query)
 
 bool Database::register_user(const std::string& username, const std::string& password)
 {
-    std::ostringstream query;
-    query << "INSERT INTO users (username, password) VALUES ('"
-          << username << ", " << password << "');";
-    return execute_query(query.str());
+    sqlite3_stmt* stmt;
+    std::string query = "INSERT INTO users (username, password) VALUES (?, ?);";
+
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
+        return false;
+    }
+
+    //Bind to ? ?
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
+
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+
+    if (success)
+    {
+        std::cout << "User registered: " << username << "\n";
+    }
+    else
+    {
+        std::cerr << "Could not register user: " << sqlite3_errmsg(db) << "\n";
+    }
+
+    return success;
 }
 
 bool Database::login_user(const std::string& username, const std::string& password)
