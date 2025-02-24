@@ -32,8 +32,22 @@
 *.app
 
 #Build
-build/
-data/
+/build/
+
+#macOS system files
+.DS_Store
+
+# Ignore SQLite database files
+/data/
+/data/chat_users.db
+/data/*.db
+/data/*.sqlite
+/data/*.sqlite3
+
+# Ignore SQLite temporary files
+/data/*.db-journal
+/data/*.db-wal
+/data/*.db-shm
 
 #VSCode
 .vscode/
