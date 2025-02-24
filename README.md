@@ -21,12 +21,25 @@ brew install boost sqlite sqlitecpp
 ```sh
 sudo apt install libboost-dev libboost-system-dev libsqlite3-dev
 ```
+**Windows (vcpkg)**
+1. Install vcpkg (if not installed):
+```sh
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg
+./bootstrap-vcpkg.bat # Windows
+./bootstrap-vcpkg.sh # macOS/Linux
+```
+2. Install dependencies:
+```sh
+vcpkg install boost-asio boost-system sqlite3 sqlitecpp
+```
+
 ### 2. Clone the Repository
 ```sh
 git clone https://github.com/lukemcelya/ChatHive.git
 cd ChatHive
 ```
-### 3. Build the Project
+### 3. Build the Project with CMake
 ```sh
 mkdir -p build && cd build
 cmake ..
@@ -68,3 +81,11 @@ After logging in, you can **switch rooms** and **send messages:**
 
 ## Contributing
 Want to contribute? Feel free to fork, submit PRs, or report issues!
+
+## License
+MIT License. Free to use and modify. See the `LICENSE` file for details.
+
+### Third-party License
+This project license:
+- **Bost.Asio** (under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt))
+- **SQLite** (Public Domain)
