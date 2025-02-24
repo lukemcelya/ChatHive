@@ -12,7 +12,7 @@ for user authentication. Users can register, log in, join rooms, and chat in rea
 * **Expandable** - Future updates will include encryption, file sharing, and a GUI client.
 
 ## Installation & Setup
-### <ins>1. Install dependencies</ins>
+### 1. <ins>Install dependencies</ins>
 **macOS (Homebrew)**
 ```sh
 brew install boost sqlite sqlitecpp
@@ -34,18 +34,18 @@ cd vcpkg
 vcpkg install boost-asio boost-system sqlite3 sqlitecpp
 ```
 
-### 2. Clone the Repository
+### 2. <ins>Clone the Repository</ins>
 ```sh
 git clone https://github.com/lukemcelya/ChatHive.git
 cd ChatHive
 ```
-### 3. Build the Project with CMake
+### 3. <ins>Build the Project with CMake</ins>
 ```sh
 mkdir -p build && cd build
 cmake ..
 cmake --build .
 ```
-### 4. Run the Chat Server
+### 4. <ins>Run the Chat Server</ins>
 ```sh
 ./ChatHive
 ```
@@ -54,7 +54,7 @@ Expected output:
 'Database connected successfully.'
 'Chat server started on port 8080'
 ```
-### 5. Connect to the Server
+### 5. <ins>Connect to the Server</ins>
 Open two or more terminal windows and run:
 ```sh
 nc localhost 8080 # Use Netcat
@@ -63,7 +63,7 @@ Or install `telnet` (if needed) and use:
 ```sh
 telnet localhost 8080
 ```
-### 6. Register & Login
+### 6. <ins>Register & Login</ins>
 ```sh
 /register <username> <password>
 /login <username> <password>
