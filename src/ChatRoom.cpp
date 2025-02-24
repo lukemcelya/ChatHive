@@ -1,20 +1,34 @@
 #include "ChatRoom.h"
 #include "ChatSession.h"
+#include <iostream>
 
-void ChatRoom::join(std::shared_ptr<ChatSession> session)
+void ChatRoom::join(const std::string& roomName, std::shared_ptr<ChatSession> session)
 {
-    sessions_.insert(session);
+    rooms_[roomName].insert(session);
+    std::cout << "User joined room: " << roomName << "\n";
 }
 
-void ChatRoom::leave(std::shared_ptr<ChatSession> session)
+void ChatRoom::leave(const std::string& roomName, std::shared_ptr<ChatSession> session)
 {
-    sessions_.erase(session);
-}
-
-void ChatRoom::deliver(const std::string& message)
-{
-    for (auto session : sessions_)
+    if (rooms_.find(roomName) != rooms_.end())
     {
-        session->deliver(message);
+        rooms_[roomName].erase(session);
+
+        //Remove empty rooms
+        if (rooms_[roomName].empty())
+        {
+            rooms_.erase(roomName);
+        }
+    }
+}
+
+void ChatRoom::deliver(const std::string& roomName, const std::string& message)
+{
+    if (rooms_.find(roomName) != rooms_.end())
+    {
+        for (auto session : rooms_[roomName])
+        {
+            session->deliver(message);
+        }
     }
 }
