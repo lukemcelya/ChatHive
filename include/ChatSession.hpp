@@ -8,12 +8,13 @@
 
 // Forward declaration
 class ChatRoom;
+class Database;
 
 class ChatSession : public std::enable_shared_from_this<ChatSession>
 {
 public:
-	ChatSession(boost::asio::ip::tcp::socket socket, ChatRoom &room)
-		: socket_(std::move(socket)), room_(room), current_room_("default") {}
+	ChatSession(boost::asio::ip::tcp::socket socket, ChatRoom &room, Database& db)
+		: socket_(std::move(socket)), room_(room), current_room_("default"), db(db), authenticated(false) {}
 
 	void start();
 	void deliver(const std::string &message);
@@ -31,6 +32,8 @@ private:
 	std::array<char, max_length> data_;
 	ChatRoom &room_;
 	std::string current_room_;
+	Database& db;
+	bool authenticated;
 };
 
 #endif

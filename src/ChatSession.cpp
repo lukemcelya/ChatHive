@@ -1,6 +1,8 @@
 #include "ChatSession.hpp"
 #include "ChatRoom.hpp"
+#include "Database.hpp"
 #include <iostream>
+
 
 void ChatSession::start()
 {
@@ -54,20 +56,59 @@ void ChatSession::do_write(const std::string &message)
 
 void ChatSession::handle_command(const std::string &command)
 {
-	if (command.rfind("/join", 0) == 0) //Trying to join room
+	if (command.rfind("/register", 0) == 0)
 	{
-		std::string roomName = command.substr(6);
-		room_.leave(current_room_, shared_from_this());//Leave current room
-		current_room_ = roomName;
-		room_.join(current_room_, shared_from_this());//Join new room
-		deliver("Switched to room: " + current_room_ + "\n");
+	    std::istringstream iss(command);
+		std::string cmd, username, password;
+		iss >> cmd >> username >> password;
+
+		if (db.register_user(username, password))
+		{
+		    deliver("Registration successful! Please log in.\n");
+		}
+		else
+		{
+		    deliver("Username already exists. Please try again.\n");
+		}
 	}
-	else if (command.rfind("/leave" , 0) == 0)
+	else if (command.rfind("/login", 0) == 0)
 	{
-	    std::string roomName = "default";
-		room_.leave(current_room_, shared_from_this());
-		current_room_ = roomName;
-		room_.join(current_room_, shared_from_this());
-		deliver("Switched to room: " + current_room_ + "\n");
+	    std::istringstream iss(command);
+		std::string cmd, username, password;
+		iss >> cmd >> username >> password;
+
+		if (db.login_user(username, password))
+		{
+			authenticated = true;
+		    deliver("Login successful!\n");
+		}
+		else
+		{
+		    deliver("Invalid username or password.\n");
+		}
 	}
+	else if (!authenticated)
+	{
+	    deliver("Please login first using '/login {username} {password}'.\n");
+	}
+	else
+	{
+	    if (command.rfind("/join", 0) == 0) //Trying to join room
+		{
+			std::string roomName = command.substr(6);
+			room_.leave(current_room_, shared_from_this());//Leave current room
+			current_room_ = roomName;
+			room_.join(current_room_, shared_from_this());//Join new room
+			deliver("Switched to room: " + current_room_ + "\n");
+		}
+		else if (command.rfind("/leave" , 0) == 0)//Leave current room
+		{
+	    	std::string roomName = "default";
+			room_.leave(current_room_, shared_from_this());
+			current_room_ = roomName;
+			room_.join(current_room_, shared_from_this());
+			deliver("Switched to room: " + current_room_ + "\n");
+		}
+	}
+	
 }
