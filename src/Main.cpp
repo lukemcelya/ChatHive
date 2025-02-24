@@ -2,7 +2,7 @@
 */
 #include <boost/asio.hpp>
 #include <iostream>
-#include "ChatServer.h"
+#include "ChatServer.hpp"
 
 int main()
 {

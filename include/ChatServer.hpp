@@ -2,7 +2,7 @@
 #define CHAT_SERVER_H
 
 #include <boost/asio.hpp>
-#include "ChatRoom.h"
+#include "ChatRoom.hpp"
 
 class ChatServer
 {

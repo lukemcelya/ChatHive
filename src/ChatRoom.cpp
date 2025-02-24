@@ -1,5 +1,5 @@
-#include "ChatRoom.h"
-#include "ChatSession.h"
+#include "ChatRoom.hpp"
+#include "ChatSession.hpp"
 #include <iostream>
 
 void ChatRoom::join(const std::string& roomName, std::shared_ptr<ChatSession> session)
