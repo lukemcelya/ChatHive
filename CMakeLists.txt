@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(BOOST_ROOT "C:/Users/Luke/boost_1_87_0/boost_1_87_0")
 
 find_package(Boost 1.87 REQUIRED COMPONENTS system)
+find_package(SQLite3 REQUIRED)
 
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -20,6 +21,9 @@ file(GLOB SOURCES "src/*.cpp")
 
 # Create the executable
 add_executable(ChatHive ${SOURCES})
+
+#Link libraries
+target_link_libraries(ChatHive ${Boost_LIBRARIES} SQLite::SQLite3)
 
 # Include header files
 include_directories(include)
