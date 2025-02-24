@@ -86,6 +86,6 @@ Want to contribute? Feel free to fork, submit PRs, or report issues!
 MIT License. Free to use and modify. See the `LICENSE` file for details.
 
 ### Third-party License
-This project license:
+This project licenses:
 - **Bost.Asio** (under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt))
 - **SQLite** (Public Domain)
