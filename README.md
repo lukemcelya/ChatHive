@@ -1,4 +1,4 @@
-# Mult-Room Chat Server (C++ with Boost.Asio & SQLite)
+# Multi-Room Chat Server (C++ with Boost.Asio & SQLite)
 
 ## Overview
 This is a **multi-room chat server** built in C++ using **Boost.Asio** for asynchronous networking and **SQLite**
