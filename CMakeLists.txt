@@ -5,10 +5,13 @@ project(ChatHive)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(BOOST_ROOT "C:/Users/Luke/boost_1_87_0/boost_1_87_0")
+# Use vcpkg toolchain (modify with your actual path)
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
 
 cmake_policy(SET CMP0167 NEW)
-find_package(Boost 1.87 REQUIRED COMPONENTS system)
+find_package(Boost 1.86 REQUIRED COMPONENTS system)
 find_package(SQLite3 REQUIRED)
 find_package(OpenSSL REQUIRED)
 
@@ -20,6 +23,10 @@ endif()
 
 # Define source files
 file(GLOB SOURCES "src/*.cpp")
+
+if (WIN32)
+    add_definitions(-D_WIN32_WINNT=0x0A00) 
+endif()
 
 # Create the executable
 add_executable(ChatHive ${SOURCES})
